@@ -4,7 +4,7 @@ import java.util.Comparator;
  * Interface for Term
  */
 public interface ITerm extends Comparable<ITerm> {
-    
+
     /**
      * Compares the two terms in lexicographic order by query.
      * 
