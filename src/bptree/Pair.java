@@ -1,15 +1,17 @@
 package bptree;
 
-public class DictionaryPair implements Comparable<DictionaryPair> {
+// class for key-value pair
+public class Pair implements Comparable<Pair> {
     int key;
     double value;
 
-    public DictionaryPair(int key, double value) {
+    public Pair(int key, double value) {
         this.key = key;
         this.value = value;
     }
-
-    public int compareTo(DictionaryPair o) {
+    
+    // compare with other Pair objects
+    public int compareTo(Pair o) {
         if (key == o.key) {
             return 0;
         } else if (key > o.key) {

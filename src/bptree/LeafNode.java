@@ -8,17 +8,17 @@ public class LeafNode extends Node implements INode{
     int numPairs;
     LeafNode leftSibling;
     LeafNode rightSibling;
-    DictionaryPair[] dictionary;
+    Pair[] dictionary;
 
-    public LeafNode(int m, DictionaryPair dp) {
+    public LeafNode(int m, Pair dp) {
         this.maxNumPairs = m - 1;
         this.minNumPairs = (int) (Math.ceil(m / 2) - 1);
-        this.dictionary = new DictionaryPair[m];
+        this.dictionary = new Pair[m];
         this.numPairs = 0;
         this.insert(dp);
     }
 
-    public LeafNode(int m, DictionaryPair[] dps, InternalNode parent) {
+    public LeafNode(int m, Pair[] dps, InternalNode parent) {
         this.maxNumPairs = m - 1;
         this.minNumPairs = (int) (Math.ceil(m / 2) - 1);
         this.dictionary = dps;
@@ -31,7 +31,7 @@ public class LeafNode extends Node implements INode{
         numPairs--;
     }
 
-    public boolean insert(DictionaryPair dp) {
+    public boolean insert(Pair dp) {
         if (this.isFull()) {
             return false;
         } else {
@@ -59,7 +59,7 @@ public class LeafNode extends Node implements INode{
         return numPairs == maxNumPairs;
     }
 
-    public int linearNullSearch(DictionaryPair[] dps) {
+    public int linearNullSearch(Pair[] dps) {
         for (int i = 0; i < dps.length; i++) {
             if (dps[i] == null) {
                 return i;

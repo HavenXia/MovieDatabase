@@ -9,19 +9,19 @@ public interface IBPlusTree {
      * @param dps
      * @param numPairs
      * @param t
-     * @return
+     * @return 
      */
-    public int binarySearch(DictionaryPair[] dps, int numPairs, int t);
+    public int binarySearch(Pair[] dps, int numPairs, int t);
     
     /**
-     * Find the leaf node
+     * Find the leaf node with recursion
      * @param key
-     * @return
+     * @return the leafnode 
      */
     public LeafNode findLeafNode(int key);
     
     /**
-     * Find the leaf node
+     * Find the leaf node with internal node and key with recursion
      * @param node
      * @param key
      * @return
@@ -37,27 +37,28 @@ public interface IBPlusTree {
     public int findIndexOfPointer(Node[] pointers, LeafNode node);
     
     /**
-     * Get the mid point
-     * @return
+     * Get the mid pointer of each node based on the order 
+     * of the BPlus Tree
+     * @return the index of mid pointer
      */
     public int getMidpoint();
     
     /**
-     * Balance the tree
-     * @param in
+     * Balance the tree 
+     * @param in the internal node
      */
     public void handleDeficiency(InternalNode in);
     
     /**
-     * 
+     * Check if the B+ tree is empty
      * @return
      */
     public boolean isEmpty();
     
     /**
-     * 
+     * Find the place to insert new node
      * @param pointers
-     * @return
+     * @return index of the first null space 
      */
     public int linearNullSearch(Node[] pointers);
     
@@ -69,35 +70,35 @@ public interface IBPlusTree {
     public void shiftDown(Node[] pointers, int amount);
     
     /**
-     * 
-     * @param dictionary
+     * sort all pairs in the Pair array
+     * @param dictionary array of pairs to be sorted
      */
-    public void sortDictionary(DictionaryPair[] dictionary);
+    public void sortDictionary(Pair[] dictionary);
     
     /**
-     * 
-     * @param in
-     * @param split
-     * @return
+     * Split child pointers of the node into two arrays
+     * @param in the Internal node to split
+     * @param split the threshold to split the pointers
+     * @return the array of new pointers
      */
     public Node[] splitChildPointers(InternalNode in, int split);
     
     /**
-     * 
-     * @param ln
-     * @param split
-     * @return
+     * split leaf node pairs into two arrays
+     * @param ln the Leaf node to split
+     * @param split the threshold to split the pointers
+     * @return the array of split pairs
      */
-    public DictionaryPair[] splitDictionary(LeafNode ln, int split);
+    public Pair[] splitDictionary(LeafNode ln, int split);
     
     /**
-     * 
+     * split the internal node
      * @param in
      */
     public void splitInternalNode(InternalNode in);
     
     /**
-     * 
+     * split the array of keys
      * @param keys
      * @param split
      * @return
@@ -105,24 +106,24 @@ public interface IBPlusTree {
     public Integer[] splitKeys(Integer[] keys, int split);
     
     /**
-     * 
+     * insert new key value pair into the B+ Tree
      * @param key
      * @param value
      */
     public void insert(int key, double value);
     
     /**
-     * 
+     * search a key in the B+ Tree
      * @param key
-     * @return
+     * @return the movie id
      */
     public Double search(int key);
     
     /**
-     * 
+     * search with a key lowerBound and upperBound in the B+ tree
      * @param lowerBound
      * @param upperBound
-     * @return
+     * @return list of movie ids
      */
     public ArrayList<Double> search(int lowerBound, int upperBound);
     
