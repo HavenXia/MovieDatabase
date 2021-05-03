@@ -1,21 +1,24 @@
 package bptree;
 
-// Searching on a B+ tree in Java
-
 import java.util.*;
 
-public class BPlusTree implements IBPlusTree{
+/**
+ * 
+ * This class is an implementation of B+ tree
+ *
+ */
+public class BPlusTree implements IBPlusTree {
     int m;
     InternalNode root;
     LeafNode firstLeaf;
-    
-    // m is order of the BPlusTree
+
+    // m is the order of the B+ tree
     public BPlusTree(int m) {
         this.m = m;
         this.root = null;
     }
 
-    // Binary search the target
+    // Binary search for the target
     public int binarySearch(Pair[] dps, int numPairs, int t) {
         Comparator<Pair> c = new Comparator<Pair>() {
             @Override
@@ -28,46 +31,58 @@ public class BPlusTree implements IBPlusTree{
         return Arrays.binarySearch(dps, 0, numPairs, new Pair(t, 0), c);
     }
 
-    // use recursion to find the leaf node
-    public LeafNode findLeafNode(int key) {
+    /*
+     * Starter method for finding a target,
+     * always calls this method first before proceeding with the helper one
+     */
+    public LeafNode findLeafNode(int target) {
 
         Integer[] keys = this.root.keys;
         int i;
-
+        
+        // iterate through the keys of this root until finds first key smaller than target
         for (i = 0; i < this.root.degree - 1; i++) {
-            if (key < keys[i]) {
+            if (target < keys[i]) {
                 break;
             }
         }
 
         Node child = this.root.childPointers[i];
+        
+        // check if reaches the LeafNode level. If yes, return with this child instance
         if (child instanceof LeafNode) {
             return (LeafNode) child;
         } else {
-            return findLeafNode((InternalNode) child, key);
+            // if not, calls findLeafNode helper method until we find it
+            return findLeafNode((InternalNode) child, target);
         }
     }
 
-    // overloaded helper method for findLeftNode
+    // Overloaded helper method for findLeftNode(int target) recursively
     public LeafNode findLeafNode(InternalNode node, int key) {
 
         Integer[] keys = node.keys;
         int i;
-
+        
+        // iterate through the keys of this node until finds first key smaller than target
         for (i = 0; i < node.degree - 1; i++) {
             if (key < keys[i]) {
                 break;
             }
         }
+        
         Node childNode = node.childPointers[i];
+        
+        // check if reaches the LeafNode level. If yes, return with this child instance
         if (childNode instanceof LeafNode) {
             return (LeafNode) childNode;
         } else {
+            // if not, recursively calls this method until we find it
             return findLeafNode((InternalNode) node.childPointers[i], key);
         }
     }
 
-    // Finding the index of the pointer
+    // Find the index of the pointer
     public int findIndexOfPointer(Node[] pointers, LeafNode node) {
         int i;
         for (i = 0; i < pointers.length; i++) {
@@ -78,7 +93,7 @@ public class BPlusTree implements IBPlusTree{
         return i;
     }
 
-    // Get the mid point of each node based on the order of current Tree
+    // Get the mid point of each node based on the order of current tree
     public int getMidpoint() {
         return (int) Math.ceil((this.m + 1) / 2.0) - 1;
     }
@@ -92,10 +107,12 @@ public class BPlusTree implements IBPlusTree{
         if (this.root == in) {
             for (int i = 0; i < in.childPointers.length; i++) {
                 if (in.childPointers[i] != null) {
+                    // if ith node is InternalNode
                     if (in.childPointers[i] instanceof InternalNode) {
                         this.root = (InternalNode) in.childPointers[i];
                         this.root.parent = null;
                     } else if (in.childPointers[i] instanceof LeafNode) {
+                        // if ith node is LeafNode
                         this.root = null;
                     }
                 }
@@ -145,12 +162,12 @@ public class BPlusTree implements IBPlusTree{
         }
     }
 
-    // check if the B+ Tree is empty
+    // Check if the B+ Tree is empty
     public boolean isEmpty() {
         return firstLeaf == null;
     }
 
-    // find first null in the pointers array
+    // Find first null node in the pointers array
     public int linearNullSearch(Node[] pointers) {
         for (int i = 0; i < pointers.length; i++) {
             if (pointers[i] == null) {
@@ -160,7 +177,6 @@ public class BPlusTree implements IBPlusTree{
         return -1;
     }
 
-    
     public void shiftDown(Node[] pointers, int amount) {
         Node[] newPointers = new Node[this.m + 1];
         for (int i = amount; i < pointers.length; i++) {
@@ -169,7 +185,7 @@ public class BPlusTree implements IBPlusTree{
         pointers = newPointers;
     }
 
-    // sort all pairs 
+    // sort all pairs
     public void sortDictionary(Pair[] dictionary) {
         Arrays.sort(dictionary, new Comparator<Pair>() {
             @Override
@@ -188,7 +204,7 @@ public class BPlusTree implements IBPlusTree{
         });
     }
 
-    // split current node pointers into two parts
+    // Split current node pointers into two parts
     // all pointers after the split is put in a new pointers array
     public Node[] splitChildPointers(InternalNode in, int split) {
 
@@ -203,7 +219,7 @@ public class BPlusTree implements IBPlusTree{
         return halfPointers;
     }
 
-    // split leaf node pairs into two arra
+    // Split leaf node pairs into two arrays
     public Pair[] splitDictionary(LeafNode ln, int split) {
 
         Pair[] dictionary = ln.dictionary;
@@ -217,8 +233,8 @@ public class BPlusTree implements IBPlusTree{
 
         return halfDict;
     }
-    
-    // split the internal node
+
+    // Split the internal node
     public void splitInternalNode(InternalNode in) {
 
         InternalNode parent = in.parent;
@@ -267,7 +283,7 @@ public class BPlusTree implements IBPlusTree{
         }
     }
 
-    // split the array of keys
+    // Split the array of keys
     public Integer[] splitKeys(Integer[] keys, int split) {
 
         Integer[] halfKeys = new Integer[this.m];
@@ -282,7 +298,7 @@ public class BPlusTree implements IBPlusTree{
         return halfKeys;
     }
 
-    // insert new key value pair into the B+ Tree
+    // Insert new key value pair into the B+ Tree
     public void insert(int key, double value) {
         if (isEmpty()) {
 
@@ -347,26 +363,29 @@ public class BPlusTree implements IBPlusTree{
         }
     }
 
-    // search a key in the B+ Tree
+    // Search a key in the B+ Tree - exact match
     public Double search(int key) {
 
+        // return null if is empty
         if (isEmpty()) {
             return null;
         }
 
-        LeafNode ln = (this.root == null) ? this.firstLeaf : findLeafNode(key);
+        // find the leaf node of this key
+        LeafNode leaf = (this.root == null) ? this.firstLeaf : findLeafNode(key);
 
-        Pair[] dps = ln.dictionary;
-        int index = binarySearch(dps, ln.numPairs, key);
+        Pair[] pairs = leaf.getDictionary();
+        // call binary search for the key in pairs
+        int index = binarySearch(pairs, leaf.getNumPairs(), key);
 
         if (index < 0) {
             return null;
         } else {
-            return dps[index].value;
+            return pairs[index].value;
         }
     }
 
-    // search with a key lowerBound and upperBound in the B+ tree
+    // Search a key specified with lowerBound and upperBound in the B+ tree - range query
     public ArrayList<Double> search(int lowerBound, int upperBound) {
 
         ArrayList<Double> values = new ArrayList<Double>();
@@ -406,6 +425,6 @@ public class BPlusTree implements IBPlusTree{
         } else {
             System.out.println("Not Found");
         }
-        ;
+        
     }
 }

@@ -67,4 +67,54 @@ public class LeafNode extends Node implements INode{
         }
         return -1;
     }
+
+    public int getMaxNumPairs() {
+        return maxNumPairs;
+    }
+
+    public void setMaxNumPairs(int maxNumPairs) {
+        this.maxNumPairs = maxNumPairs;
+    }
+
+    public int getMinNumPairs() {
+        return minNumPairs;
+    }
+
+    public void setMinNumPairs(int minNumPairs) {
+        this.minNumPairs = minNumPairs;
+    }
+
+    public int getNumPairs() {
+        return numPairs;
+    }
+
+    public void setNumPairs(int numPairs) {
+        this.numPairs = numPairs;
+    }
+
+    public LeafNode getLeftSibling() {
+        return leftSibling;
+    }
+
+    public void setLeftSibling(LeafNode leftSibling) {
+        this.leftSibling = leftSibling;
+    }
+
+    public LeafNode getRightSibling() {
+        return rightSibling;
+    }
+
+    public void setRightSibling(LeafNode rightSibling) {
+        this.rightSibling = rightSibling;
+    }
+
+    public Pair[] getDictionary() {
+        return dictionary;
+    }
+
+    public void setDictionary(Pair[] dictionary) {
+        this.dictionary = dictionary;
+    }
+    
+    
 }

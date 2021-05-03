@@ -1,5 +1,9 @@
 package bptree;
 
+/**
+ * This class is the internal node class
+ *
+ */
 public class InternalNode extends Node implements INode{
     int maxDegree;
     int minDegree;
@@ -73,21 +77,29 @@ public class InternalNode extends Node implements INode{
         this.degree--;
     }
 
+    /**
+     * Check if the number of children less than the minimum degree
+     */
     public boolean isDeficient() {
         return this.degree < this.minDegree;
     }
 
+    /**
+     * Check if the number of children exceeds the minimum degree
+     */
     public boolean isLendable() {
         return this.degree > this.minDegree;
     }
 
+    /**
+     * Check if the number of children is equal to the minimum degree
+     */
     public boolean isMergeable() {
         return this.degree == this.minDegree;
     }
 
     /**
-     * check if is over full
-     * @return
+     * Check if this node is over full(one more child than the max degree)
      */
     public boolean isFull() {
         return this.degree == maxDegree + 1;
