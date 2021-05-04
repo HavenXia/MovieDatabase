@@ -8,70 +8,106 @@ public class InternalNode extends Node implements INode{
     int maxDegree;
     int minDegree;
     int degree;
-    InternalNode leftSibling;
-    InternalNode rightSibling;
+    InternalNode left;
+    InternalNode right;
     Integer[] keys;
-    Node[] childPointers;
+    Node[] children;
 
     public InternalNode(int m, Integer[] keys) {
         this.maxDegree = m;
         this.minDegree = (int) Math.ceil(m / 2.0);
         this.degree = 0;
         this.keys = keys;
-        this.childPointers = new Node[this.maxDegree + 1];
+        this.children = new Node[this.maxDegree + 1];
     }
 
-    public InternalNode(int m, Integer[] keys, Node[] pointers) {
+    public InternalNode(int m, Integer[] keys, Node[] nodes) {
         this.maxDegree = m;
         this.minDegree = (int) Math.ceil(m / 2.0);
-        this.degree = linearNullSearch(pointers);
+        this.degree = findNullNode(nodes);
         this.keys = keys;
-        this.childPointers = pointers;
+        this.children = nodes;
     }
 
-    public void appendChildPointer(Node pointer) {
-        this.childPointers[degree] = pointer;
+    /**
+     * Append the node to the end of children
+     * @param node
+     */
+    public void appendChildNode(Node node) {
+        this.children[degree] = node;
+        // increment the degree 
+        this.degree++;
+    }
+    
+    /**
+     * Prepend the node to the front of children
+     * @param node
+     */
+    public void prependChildNode(Node node) {
+        for (int i = degree - 1; i >= 0; i--) {
+            children[i + 1] = children[i];
+        }
+        this.children[0] = node;
+        // increment the degree
         this.degree++;
     }
 
-    public int findIndexOfPointer(Node pointer) {
-        for (int i = 0; i < childPointers.length; i++) {
-            if (childPointers[i] == pointer) {
+    /**
+     * Find the index of a child specified by "node"
+     * @param node
+     * @return
+     */
+    public int findChildIndex(Node node) {
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] == node) {
                 return i;
             }
         }
+        // return -1 if not found
         return -1;
     }
 
-    public void insertChildPointer(Node pointer, int index) {
-        for (int i = degree - 1; i >= index; i--) {
-            childPointers[i + 1] = childPointers[i];
+    /**
+     * Insert a child node into the specified position
+     * @param node
+     * @param pos
+     */
+    public void insertChildNode(Node node, int pos) {
+        for (int i = degree - 1; i >= pos; i--) {
+            children[i + 1] = children[i];
         }
-        this.childPointers[index] = pointer;
+        this.children[pos] = node;
+        // increment the degree
         this.degree++;
     }
 
-    public void prependChildPointer(Node pointer) {
-        for (int i = degree - 1; i >= 0; i--) {
-            childPointers[i + 1] = childPointers[i];
-        }
-        this.childPointers[0] = pointer;
-        this.degree++;
-    }
-
+    /**
+     * Remove the key at specified index
+     * @param index
+     */
     public void removeKey(int index) {
         this.keys[index] = null;
     }
 
-    public void removePointer(int index) {
-        this.childPointers[index] = null;
+    /**
+     * Remove the node at specified "index".
+     * Then decrement the degree of this node by 1.
+     * @param index
+     */
+    public void removeNode(int index) {
+        this.children[index] = null;
         this.degree--;
     }
 
-    public void removePointer(Node pointer) {
-        for (int i = 0; i < childPointers.length; i++) {
-            if (childPointers[i] == pointer) {
-                this.childPointers[i] = null;
+    /**
+     * Remove the node specified by "node".
+     * Then decrement the degree of this node by 1.
+     * @param node
+     */
+    public void removeNode(Node node) {
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] == node) {
+                this.children[i] = null;
             }
         }
         this.degree--;
@@ -105,9 +141,14 @@ public class InternalNode extends Node implements INode{
         return this.degree == maxDegree + 1;
     }
 
-    public int linearNullSearch(Node[] pointers) {
-        for (int i = 0; i < pointers.length; i++) {
-            if (pointers[i] == null) {
+    /**
+     * Search for the first null child node in the children
+     * @param nodes
+     * @return
+     */
+    public int findNullNode(Node[] nodes) {
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] == null) {
                 return i;
             }
         }

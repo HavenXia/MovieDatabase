@@ -60,7 +60,7 @@ public interface IBPlusTree {
      * @param pointers
      * @return index of the first null space 
      */
-    public int linearNullSearch(Node[] pointers);
+    public int findNullNode(Node[] pointers);
     
     /**
      * 
@@ -73,7 +73,7 @@ public interface IBPlusTree {
      * sort all pairs in the Pair array
      * @param dictionary array of pairs to be sorted
      */
-    public void sortDictionary(Pair[] dictionary);
+    public void sortDict(Pair[] dictionary);
     
     /**
      * Split child pointers of the node into two arrays
@@ -81,7 +81,7 @@ public interface IBPlusTree {
      * @param split the threshold to split the pointers
      * @return the array of new pointers
      */
-    public Node[] splitChildPointers(InternalNode in, int split);
+    public Node[] splitChildNodes(InternalNode in, int split);
     
     /**
      * split leaf node pairs into two arrays
@@ -89,7 +89,7 @@ public interface IBPlusTree {
      * @param split the threshold to split the pointers
      * @return the array of split pairs
      */
-    public Pair[] splitDictionary(LeafNode ln, int split);
+    public Pair[] splitDict(LeafNode ln, int split);
     
     /**
      * split the internal node

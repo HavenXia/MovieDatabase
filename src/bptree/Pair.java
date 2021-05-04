@@ -5,6 +5,7 @@ package bptree;
  *
  */
 public class Pair implements Comparable<Pair> {
+    
     int key;
     double value;
 
@@ -13,7 +14,7 @@ public class Pair implements Comparable<Pair> {
         this.value = value;
     }
     
-    // compare with other Pair objects
+    // Compare with other Pair objects
     public int compareTo(Pair o) {
         if (key == o.key) {
             return 0;
@@ -22,6 +23,23 @@ public class Pair implements Comparable<Pair> {
         } else {
             return -1;
         }
+    }
+
+    // getters and setters for key and value
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
     
 }
