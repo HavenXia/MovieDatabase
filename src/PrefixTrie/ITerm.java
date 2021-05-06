@@ -16,7 +16,7 @@ public interface ITerm extends Comparable<ITerm> {
     public int compareTo(ITerm that);
     
     /**
-     * @return the string of current Iterm
+     * @return the movie title of current Iterm
      */
-    public String getTerm(); 
+    public String getTitle(); 
 }
