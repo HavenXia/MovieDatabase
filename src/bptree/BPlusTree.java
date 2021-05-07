@@ -321,7 +321,7 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Insert a new key-value pair into the B+ Tree
-    public void insert(int key, double value) {
+    public void insert(int key, int value) {
         // If the B+ tree is empty
         if (isEmpty()) {
             // Create a new leaf node by this key-value pair
@@ -394,11 +394,11 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Search a key in the B+ Tree - exact match
-    public Double search(int key) {
+    public int search(int key) {
 
-        // return null if is empty
+        // return -1 if is empty
         if (isEmpty()) {
-            return null;
+            return -1;
         }
 
         // find the leaf node of this key
@@ -409,16 +409,16 @@ public class BPlusTree implements IBPlusTree {
         int index = binarySearch(pairs, leaf.getNumOfPairs(), key);
 
         if (index < 0) {
-            return null;
+            return -1;
         } else {
             return pairs[index].value;
         }
     }
 
     // Search a key specified with lowerBound and upperBound in the B+ tree - range query
-    public ArrayList<Double> search(int lowerBound, int upperBound) {
+    public ArrayList<Integer> search(int lowerBound, int upperBound) {
 
-        ArrayList<Double> values = new ArrayList<Double>();
+        ArrayList<Integer> values = new ArrayList<Integer>();
 
         LeafNode currNode = this.firstLeaf;
         while (currNode != null) {
@@ -450,13 +450,15 @@ public class BPlusTree implements IBPlusTree {
         bpt.insert(35, 41);
         bpt.insert(45, 10);
 
-        if (bpt.search(26) != null) {
+        if (bpt.search(25) != -1) {
             System.out.println("Found");
         } else {
             System.out.println("Not Found");
         }
         
     }
+
+    
 
     
 

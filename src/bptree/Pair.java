@@ -7,9 +7,9 @@ package bptree;
 public class Pair implements Comparable<Pair> {
     
     int key;
-    double value;
+    int value;
 
-    public Pair(int key, double value) {
+    public Pair(int key, int value) {
         this.key = key;
         this.value = value;
     }
@@ -34,11 +34,11 @@ public class Pair implements Comparable<Pair> {
         this.key = key;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(int value) {
         this.value = value;
     }
     

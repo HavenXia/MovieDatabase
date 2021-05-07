@@ -110,14 +110,14 @@ public interface IBPlusTree {
      * @param key
      * @param value
      */
-    public void insert(int key, double value);
+    public void insert(int key, int value);
     
     /**
      * search a key in the B+ Tree
      * @param key
      * @return the movie id
      */
-    public Double search(int key);
+    public int search(int key);
     
     /**
      * search with a key lowerBound and upperBound in the B+ tree
@@ -125,7 +125,7 @@ public interface IBPlusTree {
      * @param upperBound
      * @return list of movie ids
      */
-    public ArrayList<Double> search(int lowerBound, int upperBound);
+    public ArrayList<Integer> search(int lowerBound, int upperBound);
     
     
 }
