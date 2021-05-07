@@ -14,7 +14,7 @@ public class TNode {
     private final int r = 26;
     
     // constructor for node that end as a word
-    public TNode(String title, long id) {
+    public TNode(String title, int id) {
         
         if (title == null || id < 0) {
             throw new IllegalArgumentException();

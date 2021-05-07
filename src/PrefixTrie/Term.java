@@ -4,10 +4,10 @@ public class Term implements ITerm {
 
     
     String title;
-    long id;
+    int id;
     
     // constructor
-    public Term(String title, long id) {
+    public Term(String title, int id) {
         if (title == null || id < 0) {
             throw new IllegalArgumentException();
         }
@@ -31,11 +31,11 @@ public class Term implements ITerm {
         this.title = title;
     }
     
-    public long getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
     

@@ -71,7 +71,7 @@ public class Trie implements ITrie {
                 }
                 
                 // extract value;
-                long id = Long.parseLong(items[0]);
+                int id = Integer.parseInt(items[0]);
                 String word = items[1].toLowerCase();
                 
                 // add the movie title with its id
@@ -88,7 +88,7 @@ public class Trie implements ITrie {
      * @param id
      * @param weight
      */
-    private void addWord(String word, long id) {
+    private void addWord(String word, int id) {
         
         // do nothing if word is null or empty string
         if (word == null || word.equals("")) {
