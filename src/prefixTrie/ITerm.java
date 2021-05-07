@@ -1,4 +1,4 @@
-package PrefixTrie;
+package prefixTrie;
 import java.util.Comparator;
 
 /**

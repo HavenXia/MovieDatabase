@@ -450,7 +450,7 @@ public class BPlusTree implements IBPlusTree {
         bpt.insert(35, 41);
         bpt.insert(45, 10);
 
-        if (bpt.search(25) != -1) {
+        if (bpt.search(15) != -1) {
             System.out.println("Found");
         } else {
             System.out.println("Not Found");

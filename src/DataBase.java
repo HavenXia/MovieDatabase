@@ -11,8 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import PrefixTrie.Trie;
 import bptree.BPlusTree;
+import prefixTrie.ITerm;
+import prefixTrie.Term;
+import prefixTrie.Trie;
 
 public class DataBase implements IDatabase {
 
@@ -117,12 +119,29 @@ public class DataBase implements IDatabase {
     @Override
     public List<Movie> searchByTitle(String title) {
         
-        return null;
+        List<Movie> result = new ArrayList<Movie>();
+        // null case
+        if (title == null || title.length() == 0) {
+            return result;
+        }
+        
+        // first get the list of ITerms with title as prefix
+        List<ITerm> terms = this.trie.getSuggestions(title);
+        
+        
+        // query each movie object with the Iterm id
+        for (ITerm term: terms) {
+            Term temp = (Term) term;
+            result.add(movieIndex.get(temp.getId()));
+        }
+        // strategy design 
+        
+        return result;
     }
 
     @Override
     public List<Movie> searchByYear(int startYear, int endYear) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 

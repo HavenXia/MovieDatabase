@@ -1,4 +1,4 @@
-package PrefixTrie;
+package prefixTrie;
 
 public class Term implements ITerm {
 

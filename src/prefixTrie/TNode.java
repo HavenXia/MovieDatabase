@@ -1,4 +1,4 @@
-package PrefixTrie;
+package prefixTrie;
 
 /**
  * Node for Trie datastructure
