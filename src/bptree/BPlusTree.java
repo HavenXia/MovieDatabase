@@ -2,6 +2,8 @@ package bptree;
 
 import java.util.*;
 
+
+
 /**
  * 
  * This class is an implementation of B+ tree
@@ -47,7 +49,7 @@ public class BPlusTree implements IBPlusTree {
             }
         }
 
-        Node child = this.root.children[i];
+        INode child =  this.root.children[i];
         
         // check if reaches the LeafNode level. If yes, return with this child instance
         if (child instanceof LeafNode) {
@@ -71,7 +73,7 @@ public class BPlusTree implements IBPlusTree {
             }
         }
         
-        Node childNode = node.children[i];
+        INode childNode = node.children[i];
         
         // check if reaches the LeafNode level. If yes, return with this child instance
         if (childNode instanceof LeafNode) {
@@ -83,7 +85,7 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Find the index of the pointer
-    public int findIndexOfPointer(Node[] pointers, LeafNode node) {
+    public int findIndexOfPointer(INode[] pointers, LeafNode node) {
         int i;
         for (i = 0; i < pointers.length; i++) {
             if (pointers[i] == node) {
@@ -101,8 +103,12 @@ public class BPlusTree implements IBPlusTree {
     // Balance the tree
     public void handleDeficiency(InternalNode in) {
 
+        //InternalNode in = (InternalNode)inode;
+        
         InternalNode sibling;
         InternalNode parent = in.parent;
+        
+        
 
         if (this.root == in) {
             for (int i = 0; i < in.children.length; i++) {
@@ -125,7 +131,7 @@ public class BPlusTree implements IBPlusTree {
             sibling = in.right;
 
             int borrowedKey = sibling.keys[0];
-            Node pointer = sibling.children[0];
+            INode pointer = sibling.children[0];
 
             in.keys[in.degree - 1] = parent.keys[0];
             in.children[in.degree] = pointer;
@@ -147,7 +153,7 @@ public class BPlusTree implements IBPlusTree {
             for (int i = 0; i < in.children.length; i++) {
                 if (in.children[i] != null) {
                     sibling.prependChildNode(in.children[i]);
-                    in.children[i].parent = sibling;
+                    ((InternalNode)in.children[i]).parent = sibling;
                     in.removeNode(i);
                 }
             }
@@ -168,7 +174,7 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Find first null node in the pointers array
-    public int findNullNode(Node[] nodes) {
+    public int findNullNode(INode[] nodes) {
         for (int i = 0; i < nodes.length; i++) {
             if (nodes[i] == null) {
                 return i;
@@ -180,8 +186,8 @@ public class BPlusTree implements IBPlusTree {
     /**
      * Shift down the indexes of this nodes[] by deviation "diff"
      */
-    public void shiftDown(Node[] nodes, int diff) {
-        Node[] newPointers = new Node[this.m + 1];
+    public void shiftDown(INode[] nodes, int diff) {
+        INode[] newPointers = new INode[this.m + 1];
         for (int i = diff; i < nodes.length; i++) {
             newPointers[i - diff] = nodes[i];
         }
@@ -209,10 +215,10 @@ public class BPlusTree implements IBPlusTree {
 
     // Split current node pointers into two parts
     // all pointers after the split is put in a new pointers array
-    public Node[] splitChildNodes(InternalNode in, int pos) {
+    public INode[] splitChildNodes(InternalNode in, int pos) {
 
-        Node[] pointers = in.children;
-        Node[] halfPointers = new Node[this.m + 1];
+        INode[] pointers = in.children;
+        INode[] halfPointers = new INode[this.m + 1];
 
         for (int i = pos + 1; i < pointers.length; i++) {
             halfPointers[i - pos - 1] = pointers[i];
@@ -251,14 +257,20 @@ public class BPlusTree implements IBPlusTree {
         int midpoint = getMidpoint();
         int newParentKey = in.keys[midpoint];
         Integer[] halfKeys = splitKeys(in.keys, midpoint);
-        Node[] halfPointers = splitChildNodes(in, midpoint);
+        INode[] halfPointers = splitChildNodes(in, midpoint);
 
         in.degree = findNullNode(in.children);
 
         InternalNode sibling = new InternalNode(this.m, halfKeys, halfPointers);
-        for (Node pointer : halfPointers) {
+        for (INode pointer : halfPointers) {
             if (pointer != null) {
-                pointer.parent = sibling;
+                if (pointer instanceof LeafNode) {
+                    ((LeafNode)pointer).parent = sibling;
+                } else {
+                    ((InternalNode)pointer).parent = sibling;
+                }
+                
+                
             }
         }
 
@@ -309,7 +321,7 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Insert a new key-value pair into the B+ Tree
-    public void insert(int key, int value) {
+    public void insert(int key, double value) {
         // If the B+ tree is empty
         if (isEmpty()) {
             // Create a new leaf node by this key-value pair
@@ -438,11 +450,15 @@ public class BPlusTree implements IBPlusTree {
         bpt.insert(35, 41);
         bpt.insert(45, 10);
 
-        if (bpt.search(25) != null) {
+        if (bpt.search(26) != null) {
             System.out.println("Found");
         } else {
             System.out.println("Not Found");
         }
         
     }
+
+    
+
+    
 }

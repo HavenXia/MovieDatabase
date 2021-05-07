@@ -2,13 +2,16 @@ package bptree;
 
 import java.util.Arrays;
 
-public class LeafNode extends Node implements INode{
+public class LeafNode implements INode{
     int maxNumPairs;
     int minNumPairs;
     int numOfPairs;
     LeafNode left;
     LeafNode right;
     Pair[] dict;
+    
+    // newly added parent
+    InternalNode parent;
 
     public LeafNode(int m, Pair pair) {
         this.maxNumPairs = m - 1;
@@ -92,9 +95,13 @@ public class LeafNode extends Node implements INode{
         }
         return -1;
     }
+    
+    public boolean isLeaf() {
+        return true;
+    }
 
     /**
-     * getters and setters
+     * Getters and setters
      */
     public int getMaxNumPairs() {
         return maxNumPairs;

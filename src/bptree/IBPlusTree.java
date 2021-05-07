@@ -18,7 +18,7 @@ public interface IBPlusTree {
      * @param key
      * @return the leafnode 
      */
-    public LeafNode findLeafNode(int key);
+    public LeafNode findLeafNode(int target);
     
     /**
      * Find the leaf node with internal node and key with recursion
@@ -34,7 +34,7 @@ public interface IBPlusTree {
      * @param node
      * @return
      */
-    public int findIndexOfPointer(Node[] pointers, LeafNode node);
+    public int findIndexOfPointer(INode[] pointers, LeafNode node);
     
     /**
      * Get the mid pointer of each node based on the order 
@@ -60,20 +60,20 @@ public interface IBPlusTree {
      * @param pointers
      * @return index of the first null space 
      */
-    public int findNullNode(Node[] pointers);
+    public int findNullNode(INode[] nodes);
     
     /**
      * 
      * @param pointers
      * @param amount
      */
-    public void shiftDown(Node[] pointers, int amount);
+    public void shiftDown(INode[] nodes, int diff);
     
     /**
      * sort all pairs in the Pair array
      * @param dictionary array of pairs to be sorted
      */
-    public void sortDict(Pair[] dictionary);
+    public void sortDict(Pair[] dict);
     
     /**
      * Split child pointers of the node into two arrays
@@ -81,7 +81,7 @@ public interface IBPlusTree {
      * @param split the threshold to split the pointers
      * @return the array of new pointers
      */
-    public Node[] splitChildNodes(InternalNode in, int split);
+    public INode[] splitChildNodes(InternalNode in, int pos);
     
     /**
      * split leaf node pairs into two arrays
@@ -89,7 +89,7 @@ public interface IBPlusTree {
      * @param split the threshold to split the pointers
      * @return the array of split pairs
      */
-    public Pair[] splitDict(LeafNode ln, int split);
+    public Pair[] splitDict(LeafNode leaf, int pos);
     
     /**
      * split the internal node
@@ -103,14 +103,14 @@ public interface IBPlusTree {
      * @param split
      * @return
      */
-    public Integer[] splitKeys(Integer[] keys, int split);
+    public Integer[] splitKeys(Integer[] keys, int pos);
     
     /**
      * insert new key value pair into the B+ Tree
      * @param key
      * @param value
      */
-    public void insert(int key, int value);
+    public void insert(int key, double value);
     
     /**
      * search a key in the B+ Tree

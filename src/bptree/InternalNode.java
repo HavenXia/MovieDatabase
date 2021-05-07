@@ -4,24 +4,28 @@ package bptree;
  * This class is the internal node class
  *
  */
-public class InternalNode extends Node implements INode{
+public class InternalNode implements INode{
     int maxDegree;
     int minDegree;
     int degree;
     InternalNode left;
     InternalNode right;
     Integer[] keys;
-    Node[] children;
+    INode[] children;
+    
+    // newly added parent
+    InternalNode parent;
+    
 
     public InternalNode(int m, Integer[] keys) {
         this.maxDegree = m;
         this.minDegree = (int) Math.ceil(m / 2.0);
         this.degree = 0;
         this.keys = keys;
-        this.children = new Node[this.maxDegree + 1];
+        this.children = new INode[this.maxDegree + 1];
     }
 
-    public InternalNode(int m, Integer[] keys, Node[] nodes) {
+    public InternalNode(int m, Integer[] keys, INode[] nodes) {
         this.maxDegree = m;
         this.minDegree = (int) Math.ceil(m / 2.0);
         this.degree = findNullNode(nodes);
@@ -33,17 +37,17 @@ public class InternalNode extends Node implements INode{
      * Append the node to the end of children
      * @param node
      */
-    public void appendChildNode(Node node) {
+    public void appendChildNode(INode node) {
         this.children[degree] = node;
         // increment the degree 
         this.degree++;
     }
-    
+
     /**
      * Prepend the node to the front of children
      * @param node
      */
-    public void prependChildNode(Node node) {
+    public void prependChildNode(INode node) {
         for (int i = degree - 1; i >= 0; i--) {
             children[i + 1] = children[i];
         }
@@ -57,7 +61,7 @@ public class InternalNode extends Node implements INode{
      * @param node
      * @return
      */
-    public int findChildIndex(Node node) {
+    public int findChildIndex(INode node) {
         for (int i = 0; i < children.length; i++) {
             if (children[i] == node) {
                 return i;
@@ -72,7 +76,7 @@ public class InternalNode extends Node implements INode{
      * @param node
      * @param pos
      */
-    public void insertChildNode(Node node, int pos) {
+    public void insertChildNode(INode node, int pos) {
         for (int i = degree - 1; i >= pos; i--) {
             children[i + 1] = children[i];
         }
@@ -104,7 +108,7 @@ public class InternalNode extends Node implements INode{
      * Then decrement the degree of this node by 1.
      * @param node
      */
-    public void removeNode(Node node) {
+    public void removeNode(INode node) {
         for (int i = 0; i < children.length; i++) {
             if (children[i] == node) {
                 this.children[i] = null;
@@ -146,13 +150,17 @@ public class InternalNode extends Node implements INode{
      * @param nodes
      * @return
      */
-    public int findNullNode(Node[] nodes) {
+    public int findNullNode(INode[] nodes) {
         for (int i = 0; i < nodes.length; i++) {
             if (nodes[i] == null) {
                 return i;
             }
         }
         return -1;
+    }
+
+    public boolean isLeaf() {
+        return false;
     }
 
 }
