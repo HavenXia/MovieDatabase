@@ -1,10 +1,9 @@
 package prefixTrie;
-import java.util.Comparator;
 
 /**
  * Interface for Term
  */
-public interface ITerm extends Comparable<ITerm> {
+public interface ITerm {
 
     /**
      * Compares the two terms in lexicographic order by query.

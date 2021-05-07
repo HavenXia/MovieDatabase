@@ -15,10 +15,12 @@ public class TrieTest {
         Trie trie = new Trie();
 
         trie.buildTrie("trieData.txt");
-        
-        List<ITerm> result = trie.getSuggestions("cleo");
-        
+
+        // test prefix trie search result
+        List<ITerm> result = trie.getSuggestions("cleopat");
         assertEquals(result.size(), 1);
+        assertEquals(result.get(0).getTitle(), "cleopatra");
+        assertEquals(result.get(0), new Term("cleopatra", 2101));
     }
 
 }
