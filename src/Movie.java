@@ -10,8 +10,8 @@ public class Movie implements IMovie{
     private List<String> genre;
     
     // constructor
-    public Movie(String title, int id, int year, double rating, 
-            String director, List<String> genre) {
+    public Movie(int id, String title, int year,List<String> genre,
+            String director, double rating) {
         this.name = title;
         this.id = id;
         this.year = year;
