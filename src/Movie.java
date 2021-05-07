@@ -9,6 +9,19 @@ public class Movie implements IMovie{
     private String director;
     private List<String> genre;
     
+    // constructor
+    public Movie(String title, int id, int year, double rating, 
+            String director, List<String> genre) {
+        this.name = title;
+        this.id = id;
+        this.year = year;
+        this.rating = rating;
+        this.director = director;
+        this.genre = genre;
+    }
+    
+    
+    
     @Override
     public void printMovie() {
         // TODO print per requirements

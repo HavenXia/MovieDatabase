@@ -9,9 +9,9 @@ public interface IDatabase {
     /**
      * Construct
      *  + a Trie
-     *  + a B+ Tree
+     *  + two B+ Tree
      *  + a HashMap<IMDB_id, Movie>
-     *  + a List of HashMap<genre, List<IMDB_id>>
+     *  + HashMap<genre, List<IMDB_id>>
      * form the input file and construct Movie object for each movie
      * 
      * @param filePath the path of the data
