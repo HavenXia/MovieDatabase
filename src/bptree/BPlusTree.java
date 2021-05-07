@@ -309,7 +309,7 @@ public class BPlusTree implements IBPlusTree {
     }
 
     // Insert a new key-value pair into the B+ Tree
-    public void insert(int key, double value) {
+    public void insert(int key, int value) {
         // If the B+ tree is empty
         if (isEmpty()) {
             // Create a new leaf node by this key-value pair

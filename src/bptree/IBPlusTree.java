@@ -110,7 +110,7 @@ public interface IBPlusTree {
      * @param key
      * @param value
      */
-    public void insert(int key, double value);
+    public void insert(int key, int value);
     
     /**
      * search a key in the B+ Tree
