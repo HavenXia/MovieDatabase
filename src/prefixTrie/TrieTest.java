@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.Test;
+
 
 public class TrieTest {
 
+    @Test
     public void testBuildTrie() {
         
         Trie trie = new Trie();
