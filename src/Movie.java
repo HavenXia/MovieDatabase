@@ -1,7 +1,6 @@
 import java.util.List;
 
-public class Movie implements IMovie{
-
+public class Movie implements IMovie {
     private String name;
     private int id;
     private int year;
@@ -52,7 +51,7 @@ public class Movie implements IMovie{
         this.year = year;
     }
 
-    public Double getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -76,6 +75,5 @@ public class Movie implements IMovie{
         this.genre = genre;
     }
 
-    
 
 }
