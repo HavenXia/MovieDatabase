@@ -94,7 +94,7 @@ public class BPlusTree implements IBPlusTree {
         if (childNode instanceof LeafNode) {
             return (LeafNode) childNode;
         } else {
-            // if not, recursively calls this method until we find it
+            // if not, recursively call this method until we find it
             return findLeafNode((InternalNode) node.getChildren()[i], key);
         }
     }

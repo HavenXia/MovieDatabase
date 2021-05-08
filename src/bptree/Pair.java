@@ -1,7 +1,7 @@
 package bptree;
 
 /**
- * This is the class for key-value pair
+ * This is the class for the key-value pair
  *
  */
 public class Pair implements Comparable<Pair> {

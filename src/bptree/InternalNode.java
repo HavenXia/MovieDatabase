@@ -1,8 +1,7 @@
 package bptree;
 
 /**
- * This class is the internal node class
- *
+ * This class represents the internal node
  */
 public class InternalNode implements INode {
     private int maxDegree;

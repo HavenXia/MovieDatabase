@@ -2,6 +2,9 @@ package bptree;
 
 import java.util.Arrays;
 
+/**
+ * This class represents the leaf node
+ */
 public class LeafNode implements INode {
     private int maxNumPairs;
     private int minNumPairs;
