@@ -24,22 +24,5 @@ public class Pair implements Comparable<Pair> {
             return -1;
         }
     }
-
-    // getters and setters for key and value
-    public int getKey() {
-        return key;
-    }
-
-    public void setKey(int key) {
-        this.key = key;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
     
 }

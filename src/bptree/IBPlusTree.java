@@ -43,11 +43,6 @@ public interface IBPlusTree {
      */
     public int getMidpoint();
     
-    /**
-     * Balance the tree 
-     * @param in the internal node
-     */
-    public void handleDeficiency(InternalNode in);
     
     /**
      * Check if the B+ tree is empty
@@ -61,13 +56,6 @@ public interface IBPlusTree {
      * @return index of the first null space 
      */
     public int findNullNode(INode[] nodes);
-    
-    /**
-     * 
-     * @param pointers
-     * @param amount
-     */
-    public void shiftDown(INode[] nodes, int diff);
     
     /**
      * sort all pairs in the Pair array

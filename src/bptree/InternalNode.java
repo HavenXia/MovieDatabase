@@ -43,18 +43,18 @@ public class InternalNode implements INode{
         this.degree++;
     }
 
-    /**
-     * Prepend the node to the front of children
-     * @param node
-     */
-    public void prependChildNode(INode node) {
-        for (int i = degree - 1; i >= 0; i--) {
-            children[i + 1] = children[i];
-        }
-        this.children[0] = node;
-        // increment the degree
-        this.degree++;
-    }
+//    /**
+//     * Prepend the node to the front of children
+//     * @param node
+//     */
+//    public void prependChildNode(INode node) {
+//        for (int i = degree - 1; i >= 0; i--) {
+//            children[i + 1] = children[i];
+//        }
+//        this.children[0] = node;
+//        // increment the degree
+//        this.degree++;
+//    }
 
     /**
      * Find the index of a child specified by "node"
@@ -85,13 +85,13 @@ public class InternalNode implements INode{
         this.degree++;
     }
 
-    /**
-     * Remove the key at specified index
-     * @param index
-     */
-    public void removeKey(int index) {
-        this.keys[index] = null;
-    }
+//    /**
+//     * Remove the key at specified index
+//     * @param index
+//     */
+//    public void removeKey(int index) {
+//        this.keys[index] = null;
+//    }
 
     /**
      * Remove the node at specified "index".
@@ -103,40 +103,40 @@ public class InternalNode implements INode{
         this.degree--;
     }
 
-    /**
-     * Remove the node specified by "node".
-     * Then decrement the degree of this node by 1.
-     * @param node
-     */
-    public void removeNode(INode node) {
-        for (int i = 0; i < children.length; i++) {
-            if (children[i] == node) {
-                this.children[i] = null;
-            }
-        }
-        this.degree--;
-    }
+//    /**
+//     * Remove the node specified by "node".
+//     * Then decrement the degree of this node by 1.
+//     * @param node
+//     */
+//    public void removeNode(INode node) {
+//        for (int i = 0; i < children.length; i++) {
+//            if (children[i] == node) {
+//                this.children[i] = null;
+//            }
+//        }
+//        this.degree--;
+//    }
 
-    /**
-     * Check if the number of children less than the minimum degree
-     */
-    public boolean isDeficient() {
-        return this.degree < this.minDegree;
-    }
-
-    /**
-     * Check if the number of children exceeds the minimum degree
-     */
-    public boolean isLendable() {
-        return this.degree > this.minDegree;
-    }
-
-    /**
-     * Check if the number of children is equal to the minimum degree
-     */
-    public boolean isMergeable() {
-        return this.degree == this.minDegree;
-    }
+//    /**
+//     * Check if the number of children less than the minimum degree
+//     */
+//    public boolean isDeficient() {
+//        return this.degree < this.minDegree;
+//    }
+//
+//    /**
+//     * Check if the number of children exceeds the minimum degree
+//     */
+//    public boolean isLendable() {
+//        return this.degree > this.minDegree;
+//    }
+//
+//    /**
+//     * Check if the number of children is equal to the minimum degree
+//     */
+//    public boolean isMergeable() {
+//        return this.degree == this.minDegree;
+//    }
 
     /**
      * Check if this node is over full(one more child than the max degree)

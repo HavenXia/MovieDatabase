@@ -54,26 +54,26 @@ public class LeafNode implements INode{
         }
     }
 
-    /**
-     * Check if the number of pairs less than the minimum pairs
-     */
-    public boolean isDeficient() {
-        return numOfPairs < minNumPairs;
-    }
+//    /**
+//     * Check if the number of pairs less than the minimum pairs
+//     */
+//    public boolean isDeficient() {
+//        return numOfPairs < minNumPairs;
+//    }
 
-    /**
-     * Check if the number of pairs greater than the minimum pairs
-     */
-    public boolean isLendable() {
-        return numOfPairs > minNumPairs;
-    }
+//    /**
+//     * Check if the number of pairs greater than the minimum pairs
+//     */
+//    public boolean isLendable() {
+//        return numOfPairs > minNumPairs;
+//    }
 
-    /**
-     * Check if the number of pairs equal to the minimum pairs
-     */
-    public boolean isMergeable() {
-        return numOfPairs == minNumPairs;
-    }
+//    /**
+//     * Check if the number of pairs equal to the minimum pairs
+//     */
+//    public boolean isMergeable() {
+//        return numOfPairs == minNumPairs;
+//    }
     
     /**
      * Check if the number of pairs equal to the maximum pairs
@@ -100,24 +100,12 @@ public class LeafNode implements INode{
         return true;
     }
 
-    /**
-     * Getters and setters
-     */
-    public int getMaxNumPairs() {
-        return maxNumPairs;
-    }
-
-    public void setMaxNumPairs(int maxNumPairs) {
-        this.maxNumPairs = maxNumPairs;
-    }
-
-    public int getMinNumPairs() {
-        return minNumPairs;
-    }
-
-    public void setMinNumPairs(int minNumPairs) {
-        this.minNumPairs = minNumPairs;
-    }
+//    /**
+//     * Getters and setters
+//     */
+//    public int getMinNumPairs() {
+//        return minNumPairs;
+//    }
 
     public int getNumOfPairs() {
         return numOfPairs;
@@ -126,30 +114,11 @@ public class LeafNode implements INode{
     public void setNumOfPairs(int numPairs) {
         this.numOfPairs = numPairs;
     }
-
-    public LeafNode getLeftSibling() {
-        return left;
-    }
-
-    public void setLeftSibling(LeafNode leftSibling) {
-        this.left = leftSibling;
-    }
-
-    public LeafNode getRightSibling() {
-        return right;
-    }
-
-    public void setRightSibling(LeafNode rightSibling) {
-        this.right = rightSibling;
-    }
-
     public Pair[] getDict() {
         return dict;
     }
 
-    public void setDict(Pair[] dict) {
-        this.dict = dict;
-    }
+   
     
     
     
