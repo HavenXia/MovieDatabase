@@ -176,7 +176,8 @@ public class DataBase implements IDatabase {
             return result;
         }
         
-        List<Integer> ids = this.movieByRating.search((int)(lowerBound * 10), (int)(upperBound * 10));
+        List<Integer> ids = this.movieByRating.search((int)(lowerBound * 10)
+                , (int)(upperBound * 10));
         
         // query each movie object with the Iterm id
         for (int id: ids) {

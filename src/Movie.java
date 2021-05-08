@@ -20,13 +20,6 @@ public class Movie implements IMovie {
     }
     
     
-    
-    @Override
-    public void printMovie() {
-        // TODO print per requirements
-        
-    }
-    
     public String getName() {
         return name;
     }
