@@ -3,30 +3,30 @@ package bptree;
 import java.util.Arrays;
 
 public class LeafNode implements INode{
-    int maxNumPairs;
-    int minNumPairs;
-    int numOfPairs;
-    LeafNode left;
-    LeafNode right;
-    Pair[] dict;
+    private int maxNumPairs;
+    private int minNumPairs;
+    private int numOfPairs;
+    private LeafNode left;
+    private LeafNode right;
+    private Pair[] dict;
     
     // newly added parent
-    InternalNode parent;
+    private InternalNode parent;
 
     public LeafNode(int m, Pair pair) {
-        this.maxNumPairs = m - 1;
-        this.minNumPairs = (int) (Math.ceil(m / 2) - 1);
-        this.dict = new Pair[m];
-        this.numOfPairs = 0;
+        this.setMaxNumPairs(m - 1);
+        this.setMinNumPairs((int) (Math.ceil(m / 2) - 1));
+        this.setDict(new Pair[m]);
+        this.setNumOfPairs(0);
         this.insert(pair);
     }
 
     public LeafNode(int m, Pair[] dictPairs, InternalNode parent) {
-        this.maxNumPairs = m - 1;
-        this.minNumPairs = (int) (Math.ceil(m / 2) - 1);
-        this.dict = dictPairs;
-        this.numOfPairs = findNullNode(dictPairs);
-        this.parent = parent;
+        this.setMaxNumPairs(m - 1);
+        this.setMinNumPairs((int) (Math.ceil(m / 2) - 1));
+        this.setDict(dictPairs);
+        this.setNumOfPairs(findNullNode(dictPairs));
+        this.setParent(parent);
     }
 
     /**
@@ -34,8 +34,8 @@ public class LeafNode implements INode{
      * @param index
      */
     public void delete(int index) {
-        this.dict[index] = null;
-        numOfPairs--;
+        this.getDict()[index] = null;
+        setNumOfPairs(getNumOfPairs() - 1);
     }
 
     /**
@@ -47,9 +47,9 @@ public class LeafNode implements INode{
         if (this.isFull()) {
             return false;
         } else {
-            this.dict[numOfPairs] = pair;
-            numOfPairs++;
-            Arrays.sort(this.dict, 0, numOfPairs);
+            this.getDict()[getNumOfPairs()] = pair;
+            setNumOfPairs(getNumOfPairs() + 1);
+            Arrays.sort(this.getDict(), 0, getNumOfPairs());
             return true;
         }
     }
@@ -79,7 +79,7 @@ public class LeafNode implements INode{
      * Check if the number of pairs equal to the maximum pairs
      */
     public boolean isFull() {
-        return numOfPairs == maxNumPairs;
+        return getNumOfPairs() == getMaxNumPairs();
     }
 
     /**
@@ -100,12 +100,9 @@ public class LeafNode implements INode{
         return true;
     }
 
-//    /**
-//     * Getters and setters
-//     */
-//    public int getMinNumPairs() {
-//        return minNumPairs;
-//    }
+    /**
+     * Getters and setters
+     */
 
     public int getNumOfPairs() {
         return numOfPairs;
@@ -116,6 +113,50 @@ public class LeafNode implements INode{
     }
     public Pair[] getDict() {
         return dict;
+    }
+
+    int getMaxNumPairs() {
+        return maxNumPairs;
+    }
+
+    void setMaxNumPairs(int maxNumPairs) {
+        this.maxNumPairs = maxNumPairs;
+    }
+
+    int getMinNumPairs() {
+        return minNumPairs;
+    }
+
+    void setMinNumPairs(int minNumPairs) {
+        this.minNumPairs = minNumPairs;
+    }
+
+    LeafNode getLeft() {
+        return left;
+    }
+
+    void setLeft(LeafNode left) {
+        this.left = left;
+    }
+
+    LeafNode getRight() {
+        return right;
+    }
+
+    void setRight(LeafNode right) {
+        this.right = right;
+    }
+
+    void setDict(Pair[] dict) {
+        this.dict = dict;
+    }
+
+    InternalNode getParent() {
+        return parent;
+    }
+
+    void setParent(InternalNode parent) {
+        this.parent = parent;
     }
 
    

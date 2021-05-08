@@ -6,23 +6,39 @@ package bptree;
  */
 public class Pair implements Comparable<Pair> {
     
-    int key;
-    int value;
+    private int key;
+    private int value;
 
     public Pair(int key, int value) {
-        this.key = key;
-        this.value = value;
+        this.setKey(key);
+        this.setValue(value);
     }
     
     // Compare with other Pair objects
     public int compareTo(Pair o) {
-        if (key == o.key) {
+        if (getKey() == o.getKey()) {
             return 0;
-        } else if (key > o.key) {
+        } else if (getKey() > o.getKey()) {
             return 1;
         } else {
             return -1;
         }
+    }
+
+    int getKey() {
+        return key;
+    }
+
+    void setKey(int key) {
+        this.key = key;
+    }
+
+    int getValue() {
+        return value;
+    }
+
+    void setValue(int value) {
+        this.value = value;
     }
     
 }

@@ -10,14 +10,14 @@ import java.util.*;
  *
  */
 public class BPlusTree implements IBPlusTree {
-    int m;
-    InternalNode root;
-    LeafNode firstLeaf;
+    private int m;
+    private InternalNode root;
+    private LeafNode firstLeaf;
 
     // m is the order of the B+ tree
     public BPlusTree(int m) {
-        this.m = m;
-        this.root = null;
+        this.setM(m);
+        this.setRoot(null);
     }
 
     /**
@@ -31,8 +31,8 @@ public class BPlusTree implements IBPlusTree {
         Comparator<Pair> c = new Comparator<Pair>() {
             @Override
             public int compare(Pair o1, Pair o2) {
-                Integer a = Integer.valueOf(o1.key);
-                Integer b = Integer.valueOf(o2.key);
+                Integer a = Integer.valueOf(o1.getKey());
+                Integer b = Integer.valueOf(o2.getKey());
                 return a.compareTo(b);
             }
         };
@@ -48,17 +48,17 @@ public class BPlusTree implements IBPlusTree {
      */
     private LeafNode findLeafNode(int target) {
 
-        Integer[] keys = this.root.keys;
+        Integer[] keys = this.getRoot().getKeys();
         int i;
         
         // iterate through the keys of this root until finds first key smaller than target
-        for (i = 0; i < this.root.degree - 1; i++) {
+        for (i = 0; i < this.getRoot().getDegree() - 1; i++) {
             if (target < keys[i]) {
                 break;
             }
         }
 
-        INode child =  this.root.children[i];
+        INode child =  this.getRoot().getChildren()[i];
         
         // check if reaches the LeafNode level. If yes, return with this child instance
         if (child instanceof LeafNode) {
@@ -78,24 +78,24 @@ public class BPlusTree implements IBPlusTree {
      */
     private LeafNode findLeafNode(InternalNode node, int key) {
 
-        Integer[] keys = node.keys;
+        Integer[] keys = node.getKeys();
         int i;
         
         // iterate through the keys of this node until finds first key smaller than target
-        for (i = 0; i < node.degree - 1; i++) {
+        for (i = 0; i < node.getDegree() - 1; i++) {
             if (key < keys[i]) {
                 break;
             }
         }
         
-        INode childNode = node.children[i];
+        INode childNode = node.getChildren()[i];
         
         // check if reaches the LeafNode level. If yes, return with this child instance
         if (childNode instanceof LeafNode) {
             return (LeafNode) childNode;
         } else {
             // if not, recursively calls this method until we find it
-            return findLeafNode((InternalNode) node.children[i], key);
+            return findLeafNode((InternalNode) node.getChildren()[i], key);
         }
     }
 
@@ -121,7 +121,7 @@ public class BPlusTree implements IBPlusTree {
      * @return the index of mid pointer
      */
     private int getMidpoint() {
-        return (int) Math.ceil((this.m + 1) / 2.0) - 1;
+        return (int) Math.ceil((this.getM() + 1) / 2.0) - 1;
     }
 
 //    // Balance the tree
@@ -197,7 +197,7 @@ public class BPlusTree implements IBPlusTree {
      * @return
      */
     private boolean isEmpty() {
-        return firstLeaf == null;
+        return getFirstLeaf() == null;
     }
 
     /**
@@ -257,8 +257,8 @@ public class BPlusTree implements IBPlusTree {
      */
     private INode[] splitChildNodes(InternalNode in, int pos) {
 
-        INode[] pointers = in.children;
-        INode[] halfPointers = new INode[this.m + 1];
+        INode[] pointers = in.getChildren();
+        INode[] halfPointers = new INode[this.getM() + 1];
 
         for (int i = pos + 1; i < pointers.length; i++) {
             halfPointers[i - pos - 1] = pointers[i];
@@ -279,7 +279,7 @@ public class BPlusTree implements IBPlusTree {
     private Pair[] splitDict(LeafNode leaf, int pos) {
 
         Pair[] dictPairs = leaf.getDict();
-        Pair[] halfDict = new Pair[this.m];
+        Pair[] halfDict = new Pair[this.getM()];
 
         // Split the leaf node pairs into two arrays from "cut"
         for (int i = pos; i < dictPairs.length; i++) {
@@ -296,54 +296,54 @@ public class BPlusTree implements IBPlusTree {
      */
     private void splitInternalNode(InternalNode in) {
 
-        InternalNode parent = in.parent;
+        InternalNode parent = in.getParent();
 
         int midpoint = getMidpoint();
-        int newParentKey = in.keys[midpoint];
-        Integer[] halfKeys = splitKeys(in.keys, midpoint);
+        int newParentKey = in.getKeys()[midpoint];
+        Integer[] halfKeys = splitKeys(in.getKeys(), midpoint);
         INode[] halfPointers = splitChildNodes(in, midpoint);
 
-        in.degree = findNullNode(in.children);
+        in.setDegree(findNullNode(in.getChildren()));
 
-        InternalNode sibling = new InternalNode(this.m, halfKeys, halfPointers);
+        InternalNode sibling = new InternalNode(this.getM(), halfKeys, halfPointers);
         for (INode pointer : halfPointers) {
             if (pointer != null) {
                 if (pointer instanceof LeafNode) {
-                    ((LeafNode)pointer).parent = sibling;
+                    ((LeafNode)pointer).setParent(sibling);
                 } else {
-                    ((InternalNode)pointer).parent = sibling;
+                    ((InternalNode)pointer).setParent(sibling);
                 }
                 
                 
             }
         }
         
-        sibling.right = in.right;
-        if (sibling.right != null) {
-            sibling.right.left = sibling;
+        sibling.setRight(in.getRight());
+        if (sibling.getRight() != null) {
+            sibling.getRight().setLeft(sibling);
         }
-        in.right = sibling;
-        sibling.left = in;
+        in.setRight(sibling);
+        sibling.setLeft(in);
 
         if (parent == null) {
-            Integer[] keys = new Integer[this.m];
+            Integer[] keys = new Integer[this.getM()];
             keys[0] = newParentKey;
-            InternalNode newRoot = new InternalNode(this.m, keys);
+            InternalNode newRoot = new InternalNode(this.getM(), keys);
             newRoot.appendChildNode(in);
             newRoot.appendChildNode(sibling);
-            this.root = newRoot;
+            this.setRoot(newRoot);
 
-            in.parent = newRoot;
-            sibling.parent = newRoot;
+            in.setParent(newRoot);
+            sibling.setParent(newRoot);
 
         } else {
 
-            parent.keys[parent.degree - 1] = newParentKey;
-            Arrays.sort(parent.keys, 0, parent.degree);
+            parent.getKeys()[parent.getDegree() - 1] = newParentKey;
+            Arrays.sort(parent.getKeys(), 0, parent.getDegree());
 
             int pointerIndex = parent.findChildIndex(in) + 1;
             parent.insertChildNode(sibling, pointerIndex);
-            sibling.parent = parent;
+            sibling.setParent(parent);
         }
     }
 
@@ -355,7 +355,7 @@ public class BPlusTree implements IBPlusTree {
      */
     private Integer[] splitKeys(Integer[] keys, int pos) {
 
-        Integer[] halfKeys = new Integer[this.m];
+        Integer[] halfKeys = new Integer[this.getM()];
 
         keys[pos] = null;
         
@@ -373,12 +373,12 @@ public class BPlusTree implements IBPlusTree {
         // If the B+ tree is empty
         if (isEmpty()) {
             // Create a new leaf node by this key-value pair
-            LeafNode leaf = new LeafNode(this.m, new Pair(key, value));
+            LeafNode leaf = new LeafNode(this.getM(), new Pair(key, value));
             // Add it as the first leaf node of this B+ tree
-            this.firstLeaf = leaf;
+            this.setFirstLeaf(leaf);
         } else {
             // If the B+ tree is not empty
-            LeafNode leaf = (this.root == null) ? this.firstLeaf : findLeafNode(key);
+            LeafNode leaf = (this.getRoot() == null) ? this.getFirstLeaf() : findLeafNode(key);
             
             // If insert is not successful(full)
             if (!leaf.insert(new Pair(key, value))) {
@@ -397,44 +397,44 @@ public class BPlusTree implements IBPlusTree {
                 Pair[] halfDict = splitDict(leaf, midpoint);
 
                 // If the parent for this leaf node is null
-                if (leaf.parent == null) {
+                if (leaf.getParent() == null) {
                     // Create new parent for this leaf
-                    Integer[] parentKeys = new Integer[this.m];
-                    parentKeys[0] = halfDict[0].key;
-                    InternalNode parent = new InternalNode(this.m, parentKeys);
-                    leaf.parent = parent;
+                    Integer[] parentKeys = new Integer[this.getM()];
+                    parentKeys[0] = halfDict[0].getKey();
+                    InternalNode parent = new InternalNode(this.getM(), parentKeys);
+                    leaf.setParent(parent);
                     parent.appendChildNode(leaf);
 
                 } else {
-                    int newParentKey = halfDict[0].key;
-                    leaf.parent.keys[leaf.parent.degree - 1] = newParentKey;
-                    Arrays.sort(leaf.parent.keys, 0, leaf.parent.degree);
+                    int newParentKey = halfDict[0].getKey();
+                    leaf.getParent().getKeys()[leaf.getParent().getDegree() - 1] = newParentKey;
+                    Arrays.sort(leaf.getParent().getKeys(), 0, leaf.getParent().getDegree());
                 }
 
                 // Create a new leaf node
-                LeafNode newLeaf = new LeafNode(this.m, halfDict, leaf.parent);
+                LeafNode newLeaf = new LeafNode(this.getM(), halfDict, leaf.getParent());
                 
-                int pointerIndex = leaf.parent.findChildIndex(leaf) + 1;
-                leaf.parent.insertChildNode(newLeaf, pointerIndex);
+                int pointerIndex = leaf.getParent().findChildIndex(leaf) + 1;
+                leaf.getParent().insertChildNode(newLeaf, pointerIndex);
 
-                newLeaf.right = leaf.right;
-                if (newLeaf.right != null) {
-                    newLeaf.right.left = newLeaf;
+                newLeaf.setRight(leaf.getRight());
+                if (newLeaf.getRight() != null) {
+                    newLeaf.getRight().setLeft(newLeaf);
                 }
-                leaf.right = newLeaf;
-                newLeaf.left = leaf;
+                leaf.setRight(newLeaf);
+                newLeaf.setLeft(leaf);
 
-                if (this.root == null) {
-                    this.root = leaf.parent;
+                if (this.getRoot() == null) {
+                    this.setRoot(leaf.getParent());
                 } else {
-                    InternalNode in = leaf.parent;
+                    InternalNode in = leaf.getParent();
                     while (in != null) {
                         if (in.isFull()) {
                             splitInternalNode(in);
                         } else {
                             break;
                         }
-                        in = in.parent;
+                        in = in.getParent();
                     }
                 }
             }
@@ -450,7 +450,7 @@ public class BPlusTree implements IBPlusTree {
         }
 
         // find the leaf node of this key
-        LeafNode leaf = (this.root == null) ? this.firstLeaf : findLeafNode(key);
+        LeafNode leaf = (this.getRoot() == null) ? this.getFirstLeaf() : findLeafNode(key);
 
         Pair[] pairs = leaf.getDict();
         // call binary search for the key in pairs
@@ -459,7 +459,7 @@ public class BPlusTree implements IBPlusTree {
         if (index < 0) {
             return -1;
         } else {
-            return pairs[index].value;
+            return pairs[index].getValue();
         }
     }
 
@@ -468,9 +468,9 @@ public class BPlusTree implements IBPlusTree {
 
         ArrayList<Integer> values = new ArrayList<Integer>();
 
-        LeafNode currNode = this.firstLeaf;
+        LeafNode currNode = this.getFirstLeaf();
         while (currNode != null) {
-            Pair pairs[] = currNode.dict;
+            Pair pairs[] = currNode.getDict();
             // iterate through the pair of this node
             for (Pair pair : pairs) {
                 // break if pair is null
@@ -478,19 +478,42 @@ public class BPlusTree implements IBPlusTree {
                     break;
                 }
                 // add if in the specified range
-                if (lowerBound <= pair.key && pair.key <= upperBound) {
-                    values.add(pair.value);
+                if (lowerBound <= pair.getKey() && pair.getKey() <= upperBound) {
+                    values.add(pair.getValue());
                 }
             }
             // continue search on the right sibling of this current node
-            currNode = currNode.right;
+            currNode = currNode.getRight();
         }
 
         return values;
     }
     
+    /**
+     * Getters and setters
+     */
     public InternalNode getRoot() {
         return root;
+    }
+
+    int getM() {
+        return m;
+    }
+
+    void setM(int m) {
+        this.m = m;
+    }
+
+    void setRoot(InternalNode root) {
+        this.root = root;
+    }
+
+    LeafNode getFirstLeaf() {
+        return firstLeaf;
+    }
+
+    void setFirstLeaf(LeafNode firstLeaf) {
+        this.firstLeaf = firstLeaf;
     }
 
 //    public static void main(String[] args) {

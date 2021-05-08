@@ -5,32 +5,32 @@ package bptree;
  *
  */
 public class InternalNode implements INode{
-    int maxDegree;
-    int minDegree;
-    int degree;
-    InternalNode left;
-    InternalNode right;
-    Integer[] keys;
-    INode[] children;
+    private int maxDegree;
+    private int minDegree;
+    private int degree;
+    private InternalNode left;
+    private InternalNode right;
+    private Integer[] keys;
+    private INode[] children;
     
     // newly added parent
-    InternalNode parent;
+    private InternalNode parent;
     
 
     public InternalNode(int m, Integer[] keys) {
-        this.maxDegree = m;
-        this.minDegree = (int) Math.ceil(m / 2.0);
-        this.degree = 0;
-        this.keys = keys;
-        this.children = new INode[this.maxDegree + 1];
+        this.setMaxDegree(m);
+        this.setMinDegree((int) Math.ceil(m / 2.0));
+        this.setDegree(0);
+        this.setKeys(keys);
+        this.setChildren(new INode[this.getMaxDegree() + 1]);
     }
 
     public InternalNode(int m, Integer[] keys, INode[] nodes) {
-        this.maxDegree = m;
-        this.minDegree = (int) Math.ceil(m / 2.0);
-        this.degree = findNullNode(nodes);
-        this.keys = keys;
-        this.children = nodes;
+        this.setMaxDegree(m);
+        this.setMinDegree((int) Math.ceil(m / 2.0));
+        this.setDegree(findNullNode(nodes));
+        this.setKeys(keys);
+        this.setChildren(nodes);
     }
 
     /**
@@ -38,9 +38,9 @@ public class InternalNode implements INode{
      * @param node
      */
     public void appendChildNode(INode node) {
-        this.children[degree] = node;
+        this.getChildren()[getDegree()] = node;
         // increment the degree 
-        this.degree++;
+        this.setDegree(this.getDegree() + 1);
     }
 
 //    /**
@@ -62,8 +62,8 @@ public class InternalNode implements INode{
      * @return
      */
     public int findChildIndex(INode node) {
-        for (int i = 0; i < children.length; i++) {
-            if (children[i] == node) {
+        for (int i = 0; i < getChildren().length; i++) {
+            if (getChildren()[i] == node) {
                 return i;
             }
         }
@@ -77,12 +77,12 @@ public class InternalNode implements INode{
      * @param pos
      */
     public void insertChildNode(INode node, int pos) {
-        for (int i = degree - 1; i >= pos; i--) {
-            children[i + 1] = children[i];
+        for (int i = getDegree() - 1; i >= pos; i--) {
+            getChildren()[i + 1] = getChildren()[i];
         }
-        this.children[pos] = node;
+        this.getChildren()[pos] = node;
         // increment the degree
-        this.degree++;
+        this.setDegree(this.getDegree() + 1);
     }
 
 //    /**
@@ -99,8 +99,8 @@ public class InternalNode implements INode{
      * @param index
      */
     public void removeNode(int index) {
-        this.children[index] = null;
-        this.degree--;
+        this.getChildren()[index] = null;
+        this.setDegree(this.getDegree() - 1);
     }
 
 //    /**
@@ -142,7 +142,7 @@ public class InternalNode implements INode{
      * Check if this node is over full(one more child than the max degree)
      */
     public boolean isFull() {
-        return this.degree == maxDegree + 1;
+        return this.getDegree() == getMaxDegree() + 1;
     }
 
     /**
@@ -161,6 +161,73 @@ public class InternalNode implements INode{
 
     public boolean isLeaf() {
         return false;
+    }
+    
+    /**
+     * Getters and setters
+     */
+    int getMaxDegree() {
+        return maxDegree;
+    }
+
+    void setMaxDegree(int maxDegree) {
+        this.maxDegree = maxDegree;
+    }
+
+    INode[] getChildren() {
+        return children;
+    }
+
+    void setChildren(INode[] children) {
+        this.children = children;
+    }
+
+    int getMinDegree() {
+        return minDegree;
+    }
+
+    void setMinDegree(int minDegree) {
+        this.minDegree = minDegree;
+    }
+
+    int getDegree() {
+        return degree;
+    }
+
+    void setDegree(int degree) {
+        this.degree = degree;
+    }
+
+    InternalNode getLeft() {
+        return left;
+    }
+
+    void setLeft(InternalNode left) {
+        this.left = left;
+    }
+
+    InternalNode getRight() {
+        return right;
+    }
+
+    void setRight(InternalNode right) {
+        this.right = right;
+    }
+
+    Integer[] getKeys() {
+        return keys;
+    }
+
+    void setKeys(Integer[] keys) {
+        this.keys = keys;
+    }
+
+    InternalNode getParent() {
+        return parent;
+    }
+
+    void setParent(InternalNode parent) {
+        this.parent = parent;
     }
 
 }
