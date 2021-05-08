@@ -34,7 +34,7 @@ public class LeafNode implements INode {
 
     /**
      * Delete a node at specified index
-     * @param index
+     * @param index - Index of the node to delete
      */
     public void delete(int index) {
         this.getDict()[index] = null;
@@ -43,7 +43,7 @@ public class LeafNode implements INode {
 
     /**
      * Insert a pair into the leaf node
-     * @param pair
+     * @param pair - Pair to insert
      * @return true if insert is successful, false if the node is full
      */
     public boolean insert(Pair pair) {
@@ -80,6 +80,7 @@ public class LeafNode implements INode {
     
     /**
      * Check if the number of pairs equal to the maximum pairs
+     * @return true if equal, false if not equal
      */
     public boolean isFull() {
         return getNumOfPairs() == getMaxNumPairs();
@@ -87,8 +88,8 @@ public class LeafNode implements INode {
 
     /**
      * Search for the first null child node in the children
-     * @param pairs
-     * @return
+     * @param pairs - All key-value pairs in the leaf node
+     * @return index of first null child node
      */
     public int findNullNode(Pair[] pairs) {
         for (int i = 0; i < pairs.length; i++) {
@@ -98,7 +99,11 @@ public class LeafNode implements INode {
         }
         return -1;
     }
-    
+
+    /**
+     * Determine if a node is a leaf
+     * @return true if node is a leaf
+     */
     public boolean isLeaf() {
         return true;
     }

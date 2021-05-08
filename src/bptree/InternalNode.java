@@ -34,7 +34,7 @@ public class InternalNode implements INode {
 
     /**
      * Append the node to the end of children
-     * @param node
+     * @param node - Node to append
      */
     public void appendChildNode(INode node) {
         this.getChildren()[getDegree()] = node;
@@ -57,8 +57,8 @@ public class InternalNode implements INode {
 
     /**
      * Find the index of a child specified by "node"
-     * @param node
-     * @return
+     * @param node - Child node to find
+     * @return index of the found child
      */
     public int findChildIndex(INode node) {
         for (int i = 0; i < getChildren().length; i++) {
@@ -72,8 +72,8 @@ public class InternalNode implements INode {
 
     /**
      * Insert a child node into the specified position
-     * @param node
-     * @param pos
+     * @param node - Node to insert
+     * @param pos - Position to insert
      */
     public void insertChildNode(INode node, int pos) {
         for (int i = getDegree() - 1; i >= pos; i--) {
@@ -93,9 +93,8 @@ public class InternalNode implements INode {
 //    }
 
     /**
-     * Remove the node at specified "index".
-     * Then decrement the degree of this node by 1.
-     * @param index
+     * Remove the node at specified index.
+     * @param index - Index of node to remove
      */
     public void removeNode(int index) {
         this.getChildren()[index] = null;
@@ -139,6 +138,7 @@ public class InternalNode implements INode {
 
     /**
      * Check if this node is over full(one more child than the max degree)
+     * @return boolean indicating whether the node is full
      */
     public boolean isFull() {
         return this.getDegree() == getMaxDegree() + 1;
@@ -146,8 +146,8 @@ public class InternalNode implements INode {
 
     /**
      * Search for the first null child node in the children
-     * @param nodes
-     * @return
+     * @param nodes - Array of children node
+     * @return index of first null child node
      */
     public int findNullNode(INode[] nodes) {
         for (int i = 0; i < nodes.length; i++) {

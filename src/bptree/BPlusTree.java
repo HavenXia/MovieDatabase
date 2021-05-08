@@ -21,11 +21,11 @@ public class BPlusTree implements IBPlusTree {
     }
 
     /**
-     * Binary search for the target
-     * @param dps
-     * @param numPairs
-     * @param t
-     * @return 
+     * Search for pair with target value in all pairs
+     * @param dps - Array of key-value pairs
+     * @param numPairs - Total number of pairs
+     * @param t - Key to search
+     * @return index of pair founded
      */
     private int binarySearch(Pair[] dps, int numPairs, int t) {
         Comparator<Pair> c = new Comparator<Pair>() {
@@ -43,8 +43,8 @@ public class BPlusTree implements IBPlusTree {
      * Find the leaf node with recursion
      * Starter method for finding a target,
      * always calls this method first before proceeding with the helper one
-     * @param target
-     * @return the LeafNode
+     * @param target - Target to find
+     * @return the LeafNode with target
      */
     private LeafNode findLeafNode(int target) {
 
@@ -70,11 +70,11 @@ public class BPlusTree implements IBPlusTree {
     }
 
     /**
-     * Overloaded helper method for findLeftNode(int target) recursively
-     * Find the leaf node with internal node and key with recursion
-     * @param node
-     * @param key
-     * @return
+     * Overload findLeafNode function to find the leaf node with key starting from
+     * a given node
+     * @param node - Node to start search
+     * @param key - Key to search for
+     * @return the LeafNode with target key
      */
     private LeafNode findLeafNode(InternalNode node, int key) {
 
@@ -116,8 +116,7 @@ public class BPlusTree implements IBPlusTree {
 //    }
 
     /**
-     * Get the mid pointer of each node based on the order 
-     * of the BPlus Tree
+     * Get the position of mid pointer of each node
      * @return the index of mid pointer
      */
     private int getMidpoint() {
@@ -194,17 +193,16 @@ public class BPlusTree implements IBPlusTree {
 
     /**
      * Check if the B+ tree is empty
-     * @return
+     * @return boolean for if the tree is empty
      */
     private boolean isEmpty() {
         return getFirstLeaf() == null;
     }
 
     /**
-     * Find the place to insert new node
-     * Find first null node in the pointers array
-     * @param pointers
-     * @return index of the first null space 
+     * Find first null node in the nodes array
+     * @param nodes - Array of nodes
+     * @return index of the first null space in the array
      */
     private int findNullNode(INode[] nodes) {
         for (int i = 0; i < nodes.length; i++) {
@@ -228,7 +226,7 @@ public class BPlusTree implements IBPlusTree {
 
     /**
      * Sort all pairs in the Pair array
-     * @param dictionary array of pairs to be sorted
+     * @param dict - array of key-value pairs to be sorted
      */
     private void sortDict(Pair[] dict) {
         Arrays.sort(dict, new Comparator<Pair>() {
@@ -252,7 +250,7 @@ public class BPlusTree implements IBPlusTree {
      * Split child pointers of the node into two arrays,
      * all pointers after the split is put in a new pointers array
      * @param in the Internal node to split
-     * @param pos the threshold to split the pointers
+     * @param pos the position to split the pointers
      * @return the array of new pointers
      */
     private INode[] splitChildNodes(InternalNode in, int pos) {
@@ -272,8 +270,8 @@ public class BPlusTree implements IBPlusTree {
     /**
      * Split the leaf node pairs into two arrays,
      * starting from the index specified by pos.
-     * @param ln the Leaf node to split
-     * @param pos the threshold to split the pointers
+     * @param leaf the Leaf node to split
+     * @param pos the position to split the pointers
      * @return the array of split pairs
      */
     private Pair[] splitDict(LeafNode leaf, int pos) {
@@ -292,7 +290,7 @@ public class BPlusTree implements IBPlusTree {
 
     /**
      * Split the internal node
-     * @param in
+     * @param in - Internal node to split
      */
     private void splitInternalNode(InternalNode in) {
 
@@ -349,9 +347,9 @@ public class BPlusTree implements IBPlusTree {
 
     /**
      * Split the array of keys, starting from the index of pos
-     * @param keys
-     * @param pos
-     * @return
+     * @param keys - Array of keys to split
+     * @param pos - Starting position
+     * @return first half of split keys
      */
     private Integer[] splitKeys(Integer[] keys, int pos) {
 
