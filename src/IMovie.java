@@ -6,11 +6,6 @@ import java.util.Comparator;
  */
 public interface IMovie {
     
-    /**
-     * Pretty prints out the contents of a movie
-     * 
-     */
-    public void printMovie();
     
     /**
      * Compares the two movies in descending order by rating.
