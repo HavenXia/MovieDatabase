@@ -470,7 +470,7 @@ public class BPlusTree implements IBPlusTree {
 
         LeafNode currNode = this.getFirstLeaf();
         while (currNode != null) {
-            Pair pairs[] = currNode.getDict();
+            Pair[] pairs = currNode.getDict();
             // iterate through the pair of this node
             for (Pair pair : pairs) {
                 // break if pair is null
@@ -525,11 +525,6 @@ public class BPlusTree implements IBPlusTree {
 //        bpt.insert(35, 41);
 //        bpt.insert(45, 10);
 //
-//        if (bpt.search(15) != -1) {
-//            System.out.println("Found");
-//        } else {
-//            System.out.println("Not Found");
-//        }
 //        
 //    }
 

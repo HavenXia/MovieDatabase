@@ -4,7 +4,7 @@ package bptree;
  * This class is the internal node class
  *
  */
-public class InternalNode implements INode{
+public class InternalNode implements INode {
     private int maxDegree;
     private int minDegree;
     private int degree;
