@@ -27,6 +27,10 @@ public class DataBaseTest {
         result = db.searchByTitle("dis");
         assertEquals(result.size(), 44);
         
+        // test title comparator order
+        assertTrue(result.get(0).getName().compareTo(result.get(1).getName()) <= 0);
+        assertTrue(result.get(22).getName().compareTo(result.get(23).getName()) <= 0);
+        
         // test search by year
         result = db.searchByYear(1912, 1912);
         assertEquals(result.size(), 1);
@@ -36,6 +40,10 @@ public class DataBaseTest {
         result = db.searchByYear(1950, 1960);
         assertEquals(result.size(), 288);
         
+        // test year comparator order
+        assertTrue(result.get(0).getYear() >= result.get(1).getYear());
+        assertTrue(result.get(110).getYear() >= result.get(111).getYear());
+        
         // test search by rating
         result = db.searchByRating(10.0, 10.0);
         assertEquals(result.size(), 0);
@@ -43,6 +51,10 @@ public class DataBaseTest {
         // only 14 movies are in 9.0 - 9.9 rating
         result = db.searchByRating(9.0, 9.9);
         assertEquals(result.size(), 14);
+        
+        // test year comparator order
+        assertTrue(result.get(0).getRating() >= result.get(1).getRating());
+        assertTrue(result.get(11).getRating() >= result.get(12).getRating());
         
         // test search by genres
         List<String> genres = new ArrayList<String>();

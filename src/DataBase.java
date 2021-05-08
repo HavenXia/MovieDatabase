@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -130,13 +131,14 @@ public class DataBase implements IDatabase {
         // first get the list of ITerms with title as prefix
         List<ITerm> terms = this.trie.getSuggestions(title);
         
-        
         // query each movie object with the Iterm id
         for (ITerm term: terms) {
             Term temp = (Term) term;
             result.add(movieIndex.get(temp.getId()));
         }
-        // strategy design 
+        
+        // strategy pattern: sort movies by movie title
+        Collections.sort(result, IMovie.byLexicographicOrder());
         
         return result;
     }
@@ -158,6 +160,9 @@ public class DataBase implements IDatabase {
             result.add(movieIndex.get(id));
         }
         
+        // strategy pattern: sort movies by year
+        Collections.sort(result, IMovie.byDescendingYearOrder());
+        
         return result;
     }
 
@@ -177,6 +182,9 @@ public class DataBase implements IDatabase {
         for (int id: ids) {
             result.add(movieIndex.get(id));
         }
+        
+        // strategy pattern: sort movies by rating
+        Collections.sort(result, IMovie.byDescendingRatingOrder());
         
         return result;
     }
