@@ -199,6 +199,13 @@ public class DataBase implements IDatabase {
         if (genres == null || genres.size() == 0) {
             return result;
         }
+        
+        // check if there is invalid input
+        for (String genre: genres) {
+            if (!movieByGenre.containsKey(genre)) {
+                return result;
+            }
+        }
          
         // use retainAll method to handle 
         Set <Integer> ids = new HashSet<Integer>();
