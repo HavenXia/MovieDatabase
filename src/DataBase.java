@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import bptree.BPlusTree;
 import prefixTrie.ITerm;
@@ -22,7 +24,7 @@ public class DataBase implements IDatabase {
     private Trie trie;
     private BPlusTree movieByYear;
     private BPlusTree movieByRating;
-    private Map<String, List<Integer>> movieByGenre;
+    private Map<String, Set<Integer>> movieByGenre;
     
     
     // constructor that initialize 
@@ -36,7 +38,7 @@ public class DataBase implements IDatabase {
         // use order 3 BPTree
         this.movieByYear = new BPlusTree(3);
         this.movieByRating = new BPlusTree(3);
-        this.movieByGenre = new HashMap<String, List<Integer>>();
+        this.movieByGenre = new HashMap<String, Set<Integer>>();
     }
     
     
@@ -84,7 +86,7 @@ public class DataBase implements IDatabase {
                 double rating = Double.parseDouble(properties[5]);
                 
                 // parse the genres into an arrayList
-                List<String> genres = Arrays.asList(properties[3].trim().split("\\s+"));
+                List<String> genres = Arrays.asList(properties[3].trim().split(", "));
                 // create Movie object for each line
                 Movie cur = new Movie(id, properties[1], year, genres, properties[4], rating);
                 // add each id-movie pair into movieIndex
@@ -103,7 +105,7 @@ public class DataBase implements IDatabase {
                 for (String genre: genres) {
                     if (!movieByGenre.containsKey(genre)) {
                         // put new List into the HashMap
-                        movieByGenre.put(genre, new ArrayList<Integer>());
+                        movieByGenre.put(genre, new HashSet<Integer>());
                     }
                     movieByGenre.get(genre).add(id);
                 }
@@ -142,19 +144,76 @@ public class DataBase implements IDatabase {
     @Override
     public List<Movie> searchByYear(int startYear, int endYear) {
         
-        return null;
+        List<Movie> result = new ArrayList<Movie>();
+        
+        // check valid year (1912-2019)
+        if (startYear < 1912 || startYear > 2019 || endYear < 1912 || endYear > 2019) {
+            return result;
+        }
+        
+        List<Integer> ids = this.movieByYear.search(startYear, endYear);
+        
+        // query each movie object with the Iterm id
+        for (int id: ids) {
+            result.add(movieIndex.get(id));
+        }
+        
+        return result;
     }
 
     @Override
     public List<Movie> searchByRating(double lowerBound, double upperBound) {
-        // TODO Auto-generated method stub
-        return null;
+        
+        List<Movie> result = new ArrayList<Movie>();
+        
+        // check valid rating (0-10)
+        if (lowerBound < 0 || lowerBound > 10 || upperBound < 0 || upperBound > 10) {
+            return result;
+        }
+        
+        List<Integer> ids = this.movieByRating.search((int)(lowerBound * 10), (int)(upperBound * 10));
+        
+        // query each movie object with the Iterm id
+        for (int id: ids) {
+            result.add(movieIndex.get(id));
+        }
+        
+        return result;
     }
 
     @Override
-    public List<Movie> searchByRating(List<String> genres) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Movie> searchByGenres(List<String> genres) {
+        
+        List<Movie> result = new ArrayList<Movie>();
+        
+        // null case
+        if (genres == null || genres.size() == 0) {
+            return result;
+        }
+         
+        // use retainAll method to handle 
+        Set <Integer> ids = new HashSet<Integer>();
+        
+        // add the first HashSet into ids
+        ids.addAll(movieByGenre.get(genres.get(0)));
+        
+        // for loop and use retain all to get intersection
+        for (int i = 1; i < genres.size(); i++) {
+            Set<Integer> temp = movieByGenre.get(genres.get(i));
+            ids.retainAll(temp);
+        }
+        
+        // query each movie object with the Iterm id
+        for (int id: ids) {
+            result.add(movieIndex.get(id));
+        }
+        
+        return result;
+    }
+    
+    // return a list of all genres
+    public List<String> getGenres() {
+        return new ArrayList<String>(this.movieByGenre.keySet());
     }
 
 }

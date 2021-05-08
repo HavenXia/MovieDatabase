@@ -64,5 +64,5 @@ public interface IDatabase {
      * @param genres some categories that used to find intersection
      * @return a list of Movie objects that have required genres 
      */
-    public List<Movie> searchByRating(List<String> genres);
+    public List<Movie> searchByGenres(List<String> genres);
 }
