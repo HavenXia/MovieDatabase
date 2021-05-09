@@ -1,7 +1,6 @@
 package prefixTrie;
 
 public class Term implements ITerm {
-
     
     String title;
     int id;

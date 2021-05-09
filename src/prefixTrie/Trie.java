@@ -84,8 +84,8 @@ public class Trie implements ITrie {
     
     /**
      * Helper method for build Trie, add each movie title into the Trie
-     * @param id
-     * @param weight
+     * @param id - Movie id
+     * @param word - Movie title
      */
     private void addWord(String word, int id) {
         
@@ -159,8 +159,8 @@ public class Trie implements ITrie {
 
     /**
      * return the subTrie root node begin with given prefix
-     * @param prefix
-     * @return
+     * @param prefix - Prefix to search
+     * @return root of subtrie with given prefix
      */
     private TNode getSubTrie(String prefix) {
         // edge cases
@@ -203,8 +203,8 @@ public class Trie implements ITrie {
     /**
      * Recursively add all nodes and copy their value into 
      * the arraylist to ensure encapsulation
-     * @param cur
-     * @param result
+     * @param node - TNode to copy
+     * @param result - Copy of all nodes
      */
     private void addSuggestions(TNode node, List<ITerm> result) {
         if (node == null) {
