@@ -2,12 +2,11 @@ package bptree;
 
 import java.util.*;
 
-
-
 /**
- * 
- * This class is an implementation of B+ tree
- *
+ * This class is an implementation of the B+ tree.
+ * We implemented the B+ tree per our requirements based on the
+ * original version from https://www.programiz.com/dsa/b-plus-tree.
+ * @author CIT-594 group
  */
 public class BPlusTree implements IBPlusTree {
     private int m;
