@@ -99,22 +99,6 @@ public class BPlusTree implements IBPlusTree {
         }
     }
 
-//    /**
-//     * Finding the index of the pointer
-//     * @param pointers
-//     * @param node
-//     * @return
-//     */
-//    private int findIndexOfPointer(INode[] pointers, LeafNode node) {
-//        int i;
-//        for (i = 0; i < pointers.length; i++) {
-//            if (pointers[i] == node) {
-//                break;
-//            }
-//        }
-//        return i;
-//    }
-
     /**
      * Get the position of mid pointer of each node
      * @return the index of mid pointer
@@ -122,74 +106,6 @@ public class BPlusTree implements IBPlusTree {
     private int getMidpoint() {
         return (int) Math.ceil((this.getM() + 1) / 2.0) - 1;
     }
-
-//    // Balance the tree
-//    public void handleDeficiency(InternalNode in) {
-//
-//        //InternalNode in = (InternalNode)inode;
-//        
-//        InternalNode sibling;
-//        InternalNode parent = in.parent;
-//        
-//        
-//
-//        if (this.root == in) {
-//            for (int i = 0; i < in.children.length; i++) {
-//                if (in.children[i] != null) {
-//                    // if ith node is InternalNode
-//                    if (in.children[i] instanceof InternalNode) {
-//                        this.root = (InternalNode) in.children[i];
-//                        this.root.parent = null;
-//                    } else if (in.children[i] instanceof LeafNode) {
-//                        // if ith node is LeafNode
-//                        this.root = null;
-//                    }
-//                }
-//            }
-//        }
-//
-//        else if (in.left != null && in.left.isLendable()) {
-//            sibling = in.left;
-//        } else if (in.right != null && in.right.isLendable()) {
-//            sibling = in.right;
-//
-//            int borrowedKey = sibling.keys[0];
-//            INode pointer = sibling.children[0];
-//
-//            in.keys[in.degree - 1] = parent.keys[0];
-//            in.children[in.degree] = pointer;
-//
-//            parent.keys[0] = borrowedKey;
-//
-//            sibling.removeNode(0);
-//            Arrays.sort(sibling.keys);
-//            sibling.removeNode(0);
-//            shiftDown(in.children, 1);
-//        } else if (in.left != null && in.left.isMergeable()) {
-//
-//        } else if (in.right != null && in.right.isMergeable()) {
-//            sibling = in.right;
-//            sibling.keys[sibling.degree - 1] = parent.keys[parent.degree - 2];
-//            Arrays.sort(sibling.keys, 0, sibling.degree);
-//            parent.keys[parent.degree - 2] = null;
-//
-//            for (int i = 0; i < in.children.length; i++) {
-//                if (in.children[i] != null) {
-//                    sibling.prependChildNode(in.children[i]);
-//                    ((InternalNode)in.children[i]).parent = sibling;
-//                    in.removeNode(i);
-//                }
-//            }
-//
-//            parent.removeNode(in);
-//
-//            sibling.left = in.left;
-//        }
-//
-//        if (parent != null && parent.isDeficient()) {
-//            handleDeficiency(parent);
-//        }
-//    }
 
     /**
      * Check if the B+ tree is empty
@@ -212,17 +128,6 @@ public class BPlusTree implements IBPlusTree {
         }
         return -1;
     }
-
-//    /**
-//     * Shift down the indexes of this nodes[] by deviation "diff"
-//     */
-//    public void shiftDown(INode[] nodes, int diff) {
-//        INode[] newPointers = new INode[this.m + 1];
-//        for (int i = diff; i < nodes.length; i++) {
-//            newPointers[i - diff] = nodes[i];
-//        }
-//        nodes = newPointers;
-//    }
 
     /**
      * Sort all pairs in the Pair array

@@ -56,27 +56,6 @@ public class LeafNode implements INode {
             return true;
         }
     }
-
-//    /**
-//     * Check if the number of pairs less than the minimum pairs
-//     */
-//    public boolean isDeficient() {
-//        return numOfPairs < minNumPairs;
-//    }
-
-//    /**
-//     * Check if the number of pairs greater than the minimum pairs
-//     */
-//    public boolean isLendable() {
-//        return numOfPairs > minNumPairs;
-//    }
-
-//    /**
-//     * Check if the number of pairs equal to the minimum pairs
-//     */
-//    public boolean isMergeable() {
-//        return numOfPairs == minNumPairs;
-//    }
     
     /**
      * Check if the number of pairs equal to the maximum pairs

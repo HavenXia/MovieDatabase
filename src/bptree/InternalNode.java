@@ -84,14 +84,6 @@ public class InternalNode implements INode {
         this.setDegree(this.getDegree() + 1);
     }
 
-//    /**
-//     * Remove the key at specified index
-//     * @param index
-//     */
-//    public void removeKey(int index) {
-//        this.keys[index] = null;
-//    }
-
     /**
      * Remove the node at specified index.
      * @param index - Index of node to remove
@@ -100,41 +92,6 @@ public class InternalNode implements INode {
         this.getChildren()[index] = null;
         this.setDegree(this.getDegree() - 1);
     }
-
-//    /**
-//     * Remove the node specified by "node".
-//     * Then decrement the degree of this node by 1.
-//     * @param node
-//     */
-//    public void removeNode(INode node) {
-//        for (int i = 0; i < children.length; i++) {
-//            if (children[i] == node) {
-//                this.children[i] = null;
-//            }
-//        }
-//        this.degree--;
-//    }
-
-//    /**
-//     * Check if the number of children less than the minimum degree
-//     */
-//    public boolean isDeficient() {
-//        return this.degree < this.minDegree;
-//    }
-//
-//    /**
-//     * Check if the number of children exceeds the minimum degree
-//     */
-//    public boolean isLendable() {
-//        return this.degree > this.minDegree;
-//    }
-//
-//    /**
-//     * Check if the number of children is equal to the minimum degree
-//     */
-//    public boolean isMergeable() {
-//        return this.degree == this.minDegree;
-//    }
 
     /**
      * Check if this node is over full(one more child than the max degree)
