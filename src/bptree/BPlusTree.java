@@ -2,19 +2,22 @@ package bptree;
 
 import java.util.*;
 
-
-
 /**
- * 
- * This class is an implementation of B+ tree
- *
+ * This class is an implementation of the B+ tree.
+ * We implemented the B+ tree per our requirements based on the
+ * original version from https://www.programiz.com/dsa/b-plus-tree.
+ * @author CIT-594 group
  */
 public class BPlusTree implements IBPlusTree {
     private int m;
     private InternalNode root;
     private LeafNode firstLeaf;
 
-    // m is the order of the B+ tree
+    /*
+     * m is the order of the B+ tree
+     * For our implementation -> 3 is two small.
+     * Most people choose 4/5 (empirical)
+     */
     public BPlusTree(int m) {
         this.setM(m);
         this.setRoot(null);
@@ -283,7 +286,7 @@ public class BPlusTree implements IBPlusTree {
             // If the B+ tree is not empty
             LeafNode leaf = (this.getRoot() == null) ? this.getFirstLeaf() : findLeafNode(key);
             
-            // If insert is not successful(full)
+            // If insert is not successful(full), means we have to split
             if (!leaf.insert(new Pair(key, value))) {
 
                 // leaf.dictionary[leaf.numPairs]
@@ -309,6 +312,7 @@ public class BPlusTree implements IBPlusTree {
                     parent.appendChildNode(leaf);
 
                 } else {
+                    // set the split node's parent
                     int newParentKey = halfDict[0].getKey();
                     leaf.getParent().getKeys()[leaf.getParent().getDegree() - 1] = newParentKey;
                     Arrays.sort(leaf.getParent().getKeys(), 0, leaf.getParent().getDegree());
@@ -332,6 +336,7 @@ public class BPlusTree implements IBPlusTree {
                 } else {
                     InternalNode in = leaf.getParent();
                     while (in != null) {
+                        // if leaf node is full, the leaf node has to be split
                         if (in.isFull()) {
                             splitInternalNode(in);
                         } else {
